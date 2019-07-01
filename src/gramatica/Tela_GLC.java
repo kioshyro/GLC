@@ -5,12 +5,19 @@
  */
 package gramatica;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Fabricio
  */
 public class Tela_GLC extends javax.swing.JFrame {
 
+    private ArrayList ladoEsquerdoProducao = new ArrayList<>();
+    private ArrayList ladoDireitoProducao = new ArrayList<>();    
+    private ArrayList<Produtor> listaProdutores = new ArrayList<>();    
+    
     /**
      * Creates new form Tela_GLC
      */
@@ -30,11 +37,11 @@ public class Tela_GLC extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtAreaGramatica = new javax.swing.JTextArea();
+        textAreaGramatica = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         btnExecutar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textAreaResultado = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         rbELivre = new javax.swing.JRadioButton();
@@ -48,10 +55,10 @@ public class Tela_GLC extends javax.swing.JFrame {
 
         jLabel5.setText("Gramática:");
 
-        txtAreaGramatica.setColumns(20);
-        txtAreaGramatica.setRows(5);
-        txtAreaGramatica.setText("A->Aa|B\nB->bB|b|C\nC->cC\nD->d|D");
-        jScrollPane1.setViewportView(txtAreaGramatica);
+        textAreaGramatica.setColumns(20);
+        textAreaGramatica.setRows(5);
+        textAreaGramatica.setText("A->Aa|B\nB->bB|b|C\nC->cC\nD->d|D");
+        jScrollPane1.setViewportView(textAreaGramatica);
 
         jLabel6.setText("OBS: Sentença Vazia = *");
 
@@ -62,9 +69,9 @@ public class Tela_GLC extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        textAreaResultado.setColumns(20);
+        textAreaResultado.setRows(5);
+        jScrollPane2.setViewportView(textAreaResultado);
 
         jLabel7.setText("Resultado:");
 
@@ -92,25 +99,25 @@ public class Tela_GLC extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnExecutar)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6))))
-                    .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExecutar))
                     .addComponent(rbELivre)
                     .addComponent(rbSimboloInutil)
                     .addComponent(rbProducaoUnitaria)
                     .addComponent(rbFatoracao)
-                    .addComponent(rbRecursaoEsquerda))
-                .addGap(18, 18, 18)
+                    .addComponent(rbRecursaoEsquerda)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -123,22 +130,22 @@ public class Tela_GLC extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(btnExecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rbELivre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbSimboloInutil, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbProducaoUnitaria, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbFatoracao, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbRecursaoEsquerda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 79, Short.MAX_VALUE))
+                        .addGap(6, 6, 6))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -148,10 +155,115 @@ public class Tela_GLC extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecutarActionPerformed
-       
+        
+        separaLadoEsquerdo_LadoDireito();
+        populaListaDeProdutores();       
+        
+        if (rbELivre.isSelected()){
+            verifica_ELivre();
+        }
 
+        if (rbSimboloInutil.isSelected()){
+            verifica_SimboloInutil();
+        }
+
+        if (rbProducaoUnitaria.isSelected()){
+            verifica_ProducaoUnitaria();
+        }
+
+        if (rbFatoracao.isSelected()){
+            verifica_Fatoracao();
+        }
+
+        if (rbRecursaoEsquerda.isSelected()){
+            verifica_RecursaoEsquerda();
+        }        
     }//GEN-LAST:event_btnExecutarActionPerformed
 
+    //--------------------------MÉTODOS PRINCIPAIS-------------------------------------------------------------------        
+    public void verifica_ELivre(){
+        boolean bTemELivre = false;
+        for (int i = 0; i < ladoDireitoProducao.size(); i++) {
+            if (ladoDireitoProducao.get(i).toString().equals("*")){
+                bTemELivre = true;
+                break;
+            }
+        }
+        
+        if (bTemELivre==false){
+            JOptionPane.showMessageDialog(null, "A Gramática não possui &-Livre.");
+        }
+        else{
+            //modificar a gramática e exibe no campo de Resultado
+        }
+    }
+    
+    public void verifica_SimboloInutil(){
+        
+    }
+
+    public void verifica_ProducaoUnitaria(){
+        
+    }
+        
+    public void verifica_Fatoracao(){
+        
+    }
+    
+    public void verifica_RecursaoEsquerda(){
+        
+    }
+    //--------------------------FIM MÉTODOS PRINCIPAIS-------------------------------------------------------------------    
+    
+    
+    //--------------------------MÉTODOS AUXILIARES-------------------------------------------------------------------
+    public void separaLadoEsquerdo_LadoDireito(){
+        String producaoSep[]=textAreaGramatica.getText().split("\n");
+        
+        int posicaoSeparador=0;
+        //para acessar cada uma das linhas da producao: producaoSep[n], sendo n a linha desejada.
+        for (String linha:producaoSep){
+            System.out.println(linha);
+            posicaoSeparador = linha.indexOf("->");
+            ladoEsquerdoProducao.add(linha.substring(0, posicaoSeparador).trim());
+            ladoDireitoProducao.add(linha.substring(posicaoSeparador+2, linha.length()).trim());
+            
+
+        } 
+        System.out.println("ladoEsq="+ladoEsquerdoProducao);
+        System.out.println("ladoDir="+ladoDireitoProducao);                
+    }
+    
+    public void populaListaDeProdutores(){
+        for (int i = 0; i < ladoEsquerdoProducao.size(); i++) {
+            //cria produtor e coloca as Letras nele (Letras = lado esquerdo)
+            Produtor produtor = new Produtor();
+            produtor.setLetras(ladoEsquerdoProducao.get(i).toString());
+            
+            //separa os geradores do lado esquerdo           
+            String[] ladoDireitoSeparado = ladoDireitoProducao.get(i).toString().split("\\|");
+            
+            //insere na lista do produtor
+            for (int j = 0; j < ladoDireitoSeparado.length; j++) {
+                produtor.getGeradores().add(ladoDireitoSeparado[j]);                
+            }
+            
+            listaProdutores.add(produtor);
+        }       
+        
+        System.out.println("-----EXIBINDO OS PRODUTORES E SUAS GERAÇÕES-----");
+                
+        for (Produtor prod : listaProdutores) {
+            System.out.println("Letras="+prod.getLetras());
+            for (int i = 0; i < prod.getGeradores().size(); i++) {
+                System.out.println("    Geradores="+prod.getGeradores().get(i));
+            }
+        }
+        System.out.println("------------------------------------------------");                                
+    }
+    //--------------------------FIM MÉTODOS AUXILIARES-------------------------------------------------------------------    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -196,12 +308,12 @@ public class Tela_GLC extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JRadioButton rbELivre;
     private javax.swing.JRadioButton rbFatoracao;
     private javax.swing.JRadioButton rbProducaoUnitaria;
     private javax.swing.JRadioButton rbRecursaoEsquerda;
     private javax.swing.JRadioButton rbSimboloInutil;
-    private javax.swing.JTextArea txtAreaGramatica;
+    private javax.swing.JTextArea textAreaGramatica;
+    private javax.swing.JTextArea textAreaResultado;
     // End of variables declaration//GEN-END:variables
 }

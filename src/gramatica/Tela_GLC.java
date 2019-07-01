@@ -194,7 +194,32 @@ public class Tela_GLC extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "A Gramática não possui &-Livre.");
         }
         else{
-            //modificar a gramática e exibe no campo de Resultado
+            //encontrando o produtor que possui o &-Livre
+            Produtor produtor = new Produtor(); 
+            produtor = retornaProdutorComSentencaVazia();
+            
+            if (produtor == null){
+                //nunca deveria cair aqui, apenas precaução
+                JOptionPane.showMessageDialog(null, "Não foi possível encontrar o produtor que possui a sentença vazia!!!.");    
+            }else{
+                //modifica a gramática e exibe no campo de Resultado    
+                produtor = criaNovoProdutor_UsandoLetra(produtor.getLetras());
+                
+                mostraListaProdutores_Geradores();
+                
+                //atualizar o gerador que tinha sentença vazia ex:       E->*    tem que ficar E->E'
+                
+                textAreaResultado.append(textAreaGramatica.getText()); //??? AQUI TEM QUE MUDAR, TEM QUE FAZER UMA FUNÇÃO PRA PEGAR TUDO DA LISTAPRODUTORES, QUE TA ATUALIZADO
+                textAreaResultado.append("\n");//para garantir que fique em uma linha nova
+                
+                String novaLinha = produtor.getLetras()+"->";
+                for (int i = 0; i < produtor.getGeradores().size(); i++) {
+                    novaLinha = novaLinha + produtor.getGeradores().get(i).toString()+"|";
+                }
+                novaLinha = novaLinha.substring(0, novaLinha.length()-1); //removendo o ultimo "|"
+                textAreaResultado.append(novaLinha);
+            }
+            
         }
     }
     
@@ -217,6 +242,61 @@ public class Tela_GLC extends javax.swing.JFrame {
     
     
     //--------------------------MÉTODOS AUXILIARES-------------------------------------------------------------------
+    public Produtor criaNovoProdutor_UsandoLetra(String letra){
+        Produtor produtor = new Produtor();
+        
+        String letraNova=null;
+        boolean auxiliar;
+        
+        boolean finalizado = false;
+        while (finalizado==false){
+            //vai tentando achar uma letra nova (testa se ainda não foi usada!!)
+            if (letraNova==null){
+                letraNova = letra+"'"; //exemplo: E'
+            }else{
+                letraNova = letraNova+"'"; //exemplo: E''   E'''   E''''
+            }
+            
+            if (existeProdutorComEssaLetra(letraNova)==false){
+                finalizado = true;
+            }                        
+        }
+        
+        System.out.println("letraNova="+letraNova);
+        produtor.setLetras(letraNova);
+        ArrayList geradores = new ArrayList<>();
+        geradores.add("*");
+        geradores.add(letra);
+        
+        produtor.setGeradores(geradores);
+        
+        listaProdutores.add(produtor);        
+        
+        return produtor;
+    }
+    
+    public boolean existeProdutorComEssaLetra(String letra){
+        for (Produtor produtor : listaProdutores) {
+            if (produtor.getLetras().equals(letra)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public Produtor retornaProdutorComSentencaVazia(){        
+        for (Produtor produtor : listaProdutores) {
+            for (int i = 0; i < produtor.getGeradores().size(); i++) {
+                if (produtor.getGeradores().get(i).toString().equals("*")){
+                    return produtor;
+                }
+            }            
+        }
+        
+        return null;
+    }
+    
     public void separaLadoEsquerdo_LadoDireito(){
         String producaoSep[]=textAreaGramatica.getText().split("\n");
         
@@ -230,8 +310,8 @@ public class Tela_GLC extends javax.swing.JFrame {
             
 
         } 
-        System.out.println("ladoEsq="+ladoEsquerdoProducao);
-        System.out.println("ladoDir="+ladoDireitoProducao);                
+        //System.out.println("ladoEsq="+ladoEsquerdoProducao);
+        //System.out.println("ladoDir="+ladoDireitoProducao);                
     }
     
     public void populaListaDeProdutores(){
@@ -250,7 +330,11 @@ public class Tela_GLC extends javax.swing.JFrame {
             
             listaProdutores.add(produtor);
         }       
-        
+
+        mostraListaProdutores_Geradores();
+    }
+    
+    public void mostraListaProdutores_Geradores(){
         System.out.println("-----EXIBINDO OS PRODUTORES E SUAS GERAÇÕES-----");
                 
         for (Produtor prod : listaProdutores) {
@@ -261,6 +345,7 @@ public class Tela_GLC extends javax.swing.JFrame {
         }
         System.out.println("------------------------------------------------");                                
     }
+            
     //--------------------------FIM MÉTODOS AUXILIARES-------------------------------------------------------------------    
     
     

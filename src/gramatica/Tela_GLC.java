@@ -80,6 +80,11 @@ public class Tela_GLC extends javax.swing.JFrame {
         buttonGroup1.add(rbELivre);
         rbELivre.setSelected(true);
         rbELivre.setText("&-Livre");
+        rbELivre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbELivreActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(rbSimboloInutil);
         rbSimboloInutil.setText("Simbolo inútil");
@@ -180,6 +185,10 @@ public class Tela_GLC extends javax.swing.JFrame {
         }        
     }//GEN-LAST:event_btnExecutarActionPerformed
 
+    private void rbELivreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbELivreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbELivreActionPerformed
+
     //--------------------------MÉTODOS PRINCIPAIS-------------------------------------------------------------------        
     public void verifica_ELivre(){
         boolean bTemELivre = false;
@@ -224,7 +233,87 @@ public class Tela_GLC extends javax.swing.JFrame {
     }
     
     public void verifica_SimboloInutil(){
+        boolean semAlcance = true;
+        boolean infertil = false;
+        String aux = "";
+        String aux_2 = "";
+        String aux_3 = "";
+        /*
+        int [][]map = new int[listaProdutores.size()][2];
         
+        for(int t = 0; t < listaProdutores.size(); t++){
+            for(int y = 0; y < 2; y++){
+                map[t][y] = -1;
+            }
+        }*/
+                 
+        //inferteis
+        
+        for(int i = 0; i < listaProdutores.size(); i++){
+            aux = listaProdutores.get(i).getLetras().toString();
+            System.out.println(aux);
+            for(int j = 0; j < listaProdutores.get(i).getGeradores().size(); j++){
+                aux_2 = listaProdutores.get(i).getGeradores().get(j).toString();
+                System.out.println(aux_2);
+                if(aux_2.contains(aux) & listaProdutores.get(i).getGeradores().size() == 1){
+                    System.out.println(listaProdutores.get(i).getGeradores().size());
+                    for(int g = 0; g < listaProdutores.size(); g++){
+                        for(int h = 0; h < listaProdutores.get(g).getGeradores().size(); h++){
+                            aux_3 = listaProdutores.get(g).getGeradores().get(h).toString();
+                            if(aux_3.contains(aux)){
+                                listaProdutores.get(g).getGeradores().remove(h);
+                            }
+                        }
+                    }
+                    listaProdutores.remove(i);
+                    i--;
+                    j = 0;
+               }
+            }
+        }
+        
+        System.out.println("\n");
+        
+        //inalcancavel
+        for(int i = listaProdutores.size()-1; i > 0; i--){
+            aux = listaProdutores.get(i).getLetras().toString();
+            System.out.println(aux);
+            for(int j = listaProdutores.size()-1; j >= 0; j--){
+                System.out.println(j);
+                if(i == j){
+                    System.out.println("iguais");
+                }else{
+                    System.out.println("entrou");
+                    for(int k = 0; k < listaProdutores.get(j).getGeradores().size(); k++){
+                        aux_2 = listaProdutores.get(j).getGeradores().get(k).toString();
+                        System.out.println(aux_2);
+                        if(aux_2.contains(aux)){
+                            System.out.println("contem");
+                            semAlcance = false;
+                        }
+                    }
+                }
+            }
+            if(semAlcance == true){
+                System.out.println("excluindo: " + listaProdutores.get(i).getLetras().toString());
+                listaProdutores.remove(i);
+            }
+            semAlcance = true;
+        }
+        
+        
+        
+        String resultado = "";
+        for(int i = 0; i < listaProdutores.size(); i++){
+            System.out.print(listaProdutores.get(i).getLetras().toString());
+            resultado = resultado.concat(listaProdutores.get(i).getLetras().toString() + "->");
+            for(int k = 0; k < listaProdutores.get(i).getGeradores().size(); k++){
+                System.out.println(listaProdutores.get(i).getGeradores().get(k).toString());
+                resultado = resultado.concat(listaProdutores.get(i).getGeradores().get(k).toString() + "|");
+            }
+            resultado = resultado.concat("\n");
+        }
+        textAreaResultado.append(resultado);
     }
 
     public void verifica_ProducaoUnitaria(){

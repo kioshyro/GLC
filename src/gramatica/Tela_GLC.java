@@ -404,6 +404,60 @@ public class Tela_GLC extends javax.swing.JFrame {
     }
         
     public void verifica_Fatoracao(){
+            
+        ArrayList<String> lista = new ArrayList<String>();
+        String aux = "";
+        char aux_2;
+        String aux_3 = "";
+        
+        for(int i = 0; i < listaProdutores.size(); i++){
+            for(int k = 0; k < listaProdutores.get(i).getGeradores().size(); k++){
+                aux = listaProdutores.get(i).getGeradores().get(k).toString();
+                if(aux.toUpperCase().equals(aux)){
+                    //fazer indireto //verificar se esta sozinho ou se esta no inicio do gerador
+                }
+            }
+        }
+        //fazer direto
+        
+        ArrayList<Produtor> listaProdutoresCopia = new ArrayList<>();            
+        for (Produtor prod : listaProdutores) {
+            Produtor p = new Produtor();
+            p.setLetras(prod.getLetras());
+            p.setGeradores(prod.getGeradores());
+
+            listaProdutoresCopia.add(p);
+        }
+        
+        for(int i = 0; i < listaProdutoresCopia.size(); i++){
+            lista.add(listaProdutoresCopia.get(i).getLetras().toString());
+            for(int k = 0; k < listaProdutoresCopia.get(i).getGeradores().size(); k++){
+                System.out.println(aux);
+                if(aux.length() > 1){
+                    
+                }else{
+                    aux_2 = listaProdutoresCopia.get(i).getGeradores().get(k).toString().charAt(0);
+                    aux_3 = Character.toString(aux_2);
+                    for(int j = 0; j < listaProdutoresCopia.get(i).getGeradores().size(); j++){
+                        if(listaProdutoresCopia.get(i).getGeradores().get(j).toString().startsWith(aux_3)){
+                            lista.add(listaProdutoresCopia.get(i).getGeradores().get(j).toString());
+                            listaProdutores.get(i).getGeradores().remove(j);
+                            Produtor p = criaNovoProdutor_UsandoLetra(lista.get(0));
+                            for(int l = 1; l < lista.size(); l++){
+                                p.getGeradores().add(lista.get(i));
+                            }
+                            
+                            listaProdutores.add(p);
+                        }
+                    }
+                }
+                
+                
+            }
+        lista.clear();
+                
+        }
+        mostraListaProdutores_NoCampoResultado();
         
     }
     

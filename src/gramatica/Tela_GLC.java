@@ -258,22 +258,15 @@ public class Tela_GLC extends javax.swing.JFrame {
                 //cria novo produtor
                 Produtor produtorNovo = new Produtor(); 
                 produtorNovo = criaNovoProdutor_UsandoLetra(produtor.getLetras());
+                produtorNovo.getGeradores().add("*");
+                produtorNovo.getGeradores().add(produtor.getLetras());
+                listaProdutores.add(produtorNovo);
                 
                 //produtor antigo, agora tem o gerador igual à letra do produtor novo
                 //ex:       E->*    tem que ficar E->E'
                 atualizaProdutorComGeradorNovo(produtor, produtorNovo);
                 
-                mostraListaProdutores_NoCampoResultado();
-                
-//                textAreaResultado.append(textAreaGramatica.getText()); //??? AQUI TEM QUE MUDAR, TEM QUE FAZER UMA FUNÇÃO PRA PEGAR TUDO DA LISTAPRODUTORES, QUE TA ATUALIZADO
-//                textAreaResultado.append("\n");//para garantir que fique em uma linha nova
-//                
-//                String novaLinha = produtor.getLetras()+"->";
-//                for (int i = 0; i < produtor.getGeradores().size(); i++) {
-//                    novaLinha = novaLinha + produtor.getGeradores().get(i).toString()+"|";
-//                }
-//                novaLinha = novaLinha.substring(0, novaLinha.length()-1); //removendo o ultimo "|"
-//                textAreaResultado.append(novaLinha);
+                mostraListaProdutores_NoCampoResultado();                
             }
             
         }
@@ -405,10 +398,9 @@ public class Tela_GLC extends javax.swing.JFrame {
                     }        
                 }                
             }
-        }
-        
-        mostraListaProdutores_Geradores();
-        mostraListaProdutores_NoCampoResultado();
+            mostraListaProdutores_Geradores();
+            mostraListaProdutores_NoCampoResultado();            
+        }        
     }
         
     public void verifica_Fatoracao(){
@@ -416,7 +408,93 @@ public class Tela_GLC extends javax.swing.JFrame {
     }
     
     public void verifica_RecursaoEsquerda(){
+        ArrayList<Produtor> produtoresComRecursaoEsquerda = criaLista_produtoresComRecursaoEsquerda();
         
+        if (produtoresComRecursaoEsquerda.isEmpty()){
+            JOptionPane.showMessageDialog(null, "A Gramática não possui Recursão à Esquerda.");
+        }
+        else{        
+            /* exemplo para teste
+            S-> aBa | aA | a | bB | b | Sa
+            A-> aA | a | bB | b | Sa
+            B-> bB | b
+
+            solução:
+            S-> aBaS’ | aAS’ | aS’ | bBS’ | bS’
+            A-> aA | a | bB | b | Sa
+            B-> bB | b
+            S’-> aS’ | *
+            */
+            
+            /* exemplo para teste <<<<<<<<
+            A->Aa|bB|b
+            B->bB|b
+            
+            solução:
+            A -> bBA'|bA'
+            B -> bB|b            
+            A'-> aA'|*
+            
+            */            
+            
+            //faz uma cópia da lista
+            ArrayList<Produtor> listaProdutoresCopia = new ArrayList<>();            
+            for (Produtor prod : listaProdutores) {
+                Produtor p = new Produtor();
+                p.setLetras(prod.getLetras());
+                p.setGeradores(prod.getGeradores());
+                
+                listaProdutoresCopia.add(p);
+            }
+            
+            ArrayList<String> vetorGeradores = new ArrayList<>();
+            String novoGerador;
+            
+            String geradorRemovido;
+            for (int x = 0; x < listaProdutoresCopia.size(); x++) {
+                for (int w = 0; w < produtoresComRecursaoEsquerda.size(); w++) {
+                    if (listaProdutoresCopia.get(x).getLetras().equals(produtoresComRecursaoEsquerda.get(w).getLetras())){                                                
+                        for (int i = 0; i < listaProdutoresCopia.get(x).getGeradores().size(); i++) {                
+                            if (listaProdutoresCopia.get(x).getLetras().equals(Character.toString(listaProdutoresCopia.get(x).getGeradores().get(i).toString().charAt(0)))){                                            
+                                geradorRemovido = listaProdutoresCopia.get(x).getGeradores().get(i).toString();
+                                //remover da produção o gerador que possui a recursão
+                                //listaProdutoresCopia.get(x).getGeradores().remove(i);
+                                listaProdutores.get(x).getGeradores().remove(i);
+                                
+                                
+                                //criar novo produtor (novo símbolo)
+                                Produtor novoProdutor = criaNovoProdutor_UsandoLetra(listaProdutoresCopia.get(x).getLetras());
+
+                                //este novo produtor, possui o gerador da recursão, menos o naoTerminal recursivo, concatenado do próprio novo simbolo e o simbolo vazio "*"                                
+                                novoProdutor.getGeradores().add(geradorRemovido.substring(1, geradorRemovido.length()).concat(novoProdutor.getLetras()));
+                                novoProdutor.getGeradores().add("*");
+                                        
+                                
+                                
+                                
+                                //removendo os geradores para adicionar de novo com o novo simbolo concatenado                                
+                                for (int j = 0; j < listaProdutores.get(x).getGeradores().size(); j++) {                                    
+                                    vetorGeradores.add(listaProdutores.get(x).getGeradores().get(j).toString());                                    
+                                }
+                                listaProdutores.get(x).getGeradores().clear();      
+                                
+                                //adicionando simbolo do novo produtor ao final dos geradores restantes no produtor que tinha problema
+                                for (int j = 0; j < vetorGeradores.size(); j++) {                                    
+                                    novoGerador = vetorGeradores.get(j);
+                                    novoGerador = novoGerador + novoProdutor.getLetras();
+                                    listaProdutores.get(x).getGeradores().add(novoGerador);
+                                }
+                                                                
+                                listaProdutores.add(novoProdutor);
+                            }
+                        }    
+                    }
+                }
+            }            
+                        
+            mostraListaProdutores_Geradores();
+            mostraListaProdutores_NoCampoResultado();            
+        }        
     }
     //--------------------------FIM MÉTODOS PRINCIPAIS-------------------------------------------------------------------    
     
@@ -467,16 +545,15 @@ public class Tela_GLC extends javax.swing.JFrame {
             }                        
         }
         
-        System.out.println("letraNova="+letraNova);
         produtor.setLetras(letraNova);
-        ArrayList geradores = new ArrayList<>();
-        geradores.add("*");
-        geradores.add(letra);
-        
-        produtor.setGeradores(geradores);
-        
-        listaProdutores.add(produtor);        
-        
+//        ArrayList geradores = new ArrayList<>();
+//        geradores.add("*");
+//        geradores.add(letra);
+//        
+//        produtor.setGeradores(geradores);
+//        
+//        listaProdutores.add(produtor);        
+//        
         return produtor;
     }
     
@@ -572,7 +649,28 @@ public class Tela_GLC extends javax.swing.JFrame {
             }
         }        
     }
-            
+       
+    public ArrayList<Produtor> criaLista_produtoresComRecursaoEsquerda(){
+        ArrayList<Produtor> lista = new ArrayList<>();
+        
+        //procura produtores que possuam geradores que começem com a mesma letra (naoTerminal) que o próprio produtor
+        //ex:    A->Ab
+                
+        for (Produtor prod : listaProdutores) {
+            for (int i = 0; i < prod.getGeradores().size(); i++) {                
+                if (prod.getLetras().equals(Character.toString(prod.getGeradores().get(i).toString().charAt(0)))){                    
+                    lista.add(prod);                                        
+                }                
+            }
+        }
+        
+        System.out.println("LISTA produtoresComRecursao--------------");
+        for (Produtor prod : lista) {
+            System.out.println(prod.getLetras());
+        }
+        
+        return lista;
+    }
     //--------------------------FIM MÉTODOS AUXILIARES-------------------------------------------------------------------    
     
     

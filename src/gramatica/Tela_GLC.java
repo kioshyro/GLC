@@ -49,6 +49,8 @@ public class Tela_GLC extends javax.swing.JFrame {
         rbProducaoUnitaria = new javax.swing.JRadioButton();
         rbFatoracao = new javax.swing.JRadioButton();
         rbRecursaoEsquerda = new javax.swing.JRadioButton();
+        btnMoverResultadoParaCampoGramatica = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -98,6 +100,20 @@ public class Tela_GLC extends javax.swing.JFrame {
         buttonGroup1.add(rbRecursaoEsquerda);
         rbRecursaoEsquerda.setText("Recursão à esquerda");
 
+        btnMoverResultadoParaCampoGramatica.setText("<");
+        btnMoverResultadoParaCampoGramatica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoverResultadoParaCampoGramaticaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Resetar Lista");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,24 +121,28 @@ public class Tela_GLC extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(rbProducaoUnitaria)
+                    .addComponent(rbELivre)
+                    .addComponent(rbSimboloInutil)
+                    .addComponent(rbFatoracao)
+                    .addComponent(rbRecursaoEsquerda)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExecutar))
-                    .addComponent(rbELivre)
-                    .addComponent(rbSimboloInutil)
-                    .addComponent(rbProducaoUnitaria)
-                    .addComponent(rbFatoracao)
-                    .addComponent(rbRecursaoEsquerda)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(btnMoverResultadoParaCampoGramatica)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -135,11 +155,18 @@ public class Tela_GLC extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(btnMoverResultadoParaCampoGramatica, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(btnExecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnExecutar)
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rbELivre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -150,7 +177,7 @@ public class Tela_GLC extends javax.swing.JFrame {
                         .addComponent(rbFatoracao, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbRecursaoEsquerda, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
+                        .addGap(8, 8, 8))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -160,9 +187,11 @@ public class Tela_GLC extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecutarActionPerformed
-        
-        separaLadoEsquerdo_LadoDireito();
-        populaListaDeProdutores();       
+
+        if (listaProdutores.isEmpty()){ //somente se já não foi executado            
+            separaLadoEsquerdo_LadoDireito();
+            populaListaDeProdutores();       
+        }
         
         if (rbELivre.isSelected()){
             verifica_ELivre();
@@ -189,6 +218,19 @@ public class Tela_GLC extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbELivreActionPerformed
 
+    private void btnMoverResultadoParaCampoGramaticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverResultadoParaCampoGramaticaActionPerformed
+        // TODO add your handling code here:
+        textAreaGramatica.setText("");
+        textAreaGramatica.append(textAreaResultado.getText());
+    }//GEN-LAST:event_btnMoverResultadoParaCampoGramaticaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        listaProdutores.clear();  
+        ladoEsquerdoProducao.clear();
+        ladoDireitoProducao.clear();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     //--------------------------MÉTODOS PRINCIPAIS-------------------------------------------------------------------        
     public void verifica_ELivre(){
         boolean bTemELivre = false;
@@ -211,22 +253,27 @@ public class Tela_GLC extends javax.swing.JFrame {
                 //nunca deveria cair aqui, apenas precaução
                 JOptionPane.showMessageDialog(null, "Não foi possível encontrar o produtor que possui a sentença vazia!!!.");    
             }else{
-                //modifica a gramática e exibe no campo de Resultado    
-                produtor = criaNovoProdutor_UsandoLetra(produtor.getLetras());
+                //modifica a gramática e exibe no campo de Resultado  
                 
-                mostraListaProdutores_Geradores();
+                //cria novo produtor
+                Produtor produtorNovo = new Produtor(); 
+                produtorNovo = criaNovoProdutor_UsandoLetra(produtor.getLetras());
                 
-                //atualizar o gerador que tinha sentença vazia ex:       E->*    tem que ficar E->E'
+                //produtor antigo, agora tem o gerador igual à letra do produtor novo
+                //ex:       E->*    tem que ficar E->E'
+                atualizaProdutorComGeradorNovo(produtor, produtorNovo);
                 
-                textAreaResultado.append(textAreaGramatica.getText()); //??? AQUI TEM QUE MUDAR, TEM QUE FAZER UMA FUNÇÃO PRA PEGAR TUDO DA LISTAPRODUTORES, QUE TA ATUALIZADO
-                textAreaResultado.append("\n");//para garantir que fique em uma linha nova
+                mostraListaProdutores_NoCampoResultado();
                 
-                String novaLinha = produtor.getLetras()+"->";
-                for (int i = 0; i < produtor.getGeradores().size(); i++) {
-                    novaLinha = novaLinha + produtor.getGeradores().get(i).toString()+"|";
-                }
-                novaLinha = novaLinha.substring(0, novaLinha.length()-1); //removendo o ultimo "|"
-                textAreaResultado.append(novaLinha);
+//                textAreaResultado.append(textAreaGramatica.getText()); //??? AQUI TEM QUE MUDAR, TEM QUE FAZER UMA FUNÇÃO PRA PEGAR TUDO DA LISTAPRODUTORES, QUE TA ATUALIZADO
+//                textAreaResultado.append("\n");//para garantir que fique em uma linha nova
+//                
+//                String novaLinha = produtor.getLetras()+"->";
+//                for (int i = 0; i < produtor.getGeradores().size(); i++) {
+//                    novaLinha = novaLinha + produtor.getGeradores().get(i).toString()+"|";
+//                }
+//                novaLinha = novaLinha.substring(0, novaLinha.length()-1); //removendo o ultimo "|"
+//                textAreaResultado.append(novaLinha);
             }
             
         }
@@ -301,23 +348,67 @@ public class Tela_GLC extends javax.swing.JFrame {
             semAlcance = true;
         }
         
+        mostraListaProdutores_NoCampoResultado();
         
-        
-        String resultado = "";
-        for(int i = 0; i < listaProdutores.size(); i++){
-            System.out.print(listaProdutores.get(i).getLetras().toString());
-            resultado = resultado.concat(listaProdutores.get(i).getLetras().toString() + "->");
-            for(int k = 0; k < listaProdutores.get(i).getGeradores().size(); k++){
-                System.out.println(listaProdutores.get(i).getGeradores().get(k).toString());
-                resultado = resultado.concat(listaProdutores.get(i).getGeradores().get(k).toString() + "|");
-            }
-            resultado = resultado.concat("\n");
-        }
-        textAreaResultado.append(resultado);
+//        String resultado = "";
+//        for(int i = 0; i < listaProdutores.size(); i++){
+//            System.out.print(listaProdutores.get(i).getLetras().toString());
+//            resultado = resultado.concat(listaProdutores.get(i).getLetras().toString() + "->");
+//            for(int k = 0; k < listaProdutores.get(i).getGeradores().size(); k++){
+//                System.out.println(listaProdutores.get(i).getGeradores().get(k).toString());
+//                resultado = resultado.concat(listaProdutores.get(i).getGeradores().get(k).toString() + "|");
+//            }
+//            resultado = resultado.substring(0, resultado.length()-1); //removendo o ultimo "|"
+//            resultado = resultado.concat("\n");
+//        }
+//        textAreaResultado.append(resultado);
     }
 
     public void verifica_ProducaoUnitaria(){
+        ArrayList naoTerminais = criaListaNaoTerminais_Solitarios();
         
+        if (naoTerminais.isEmpty()){
+            JOptionPane.showMessageDialog(null, "A Gramática não possui Produção Unitária.");
+        }
+        else{
+            /*
+            S -> aA|aB|B
+            B -> bB|b
+
+            solução:
+            S -> aA|aB|bB|b   (os geradores, sentenças de B, são copiados pra onde o B estava)
+            B -> bB|b
+            */
+            
+            ArrayList<Produtor> listaProdutoresCopia = listaProdutores;
+            String naoTerminalDaVez;
+            //procura um produtor que possui o problema
+            for (Produtor produtor : listaProdutoresCopia) {
+                for (int j = 0; j < naoTerminais.size(); j++) {
+                    naoTerminalDaVez = naoTerminais.get(j).toString();
+                    
+                    //procura este naoTerminal nos geradores do produtor
+                    for (int i = 0; i < produtor.getGeradores().size(); i++) {
+                        if (produtor.getGeradores().get(i).toString().equals(naoTerminalDaVez)){
+                            produtor.getGeradores().remove(i); //remove aquele gerador que possui o naoTerminal
+                            
+                            //encontra o produtor que corresponde ao naoTerminal
+                            for (Produtor prod : listaProdutores) {
+                                if (prod.getLetras().equals(naoTerminalDaVez)){
+                                    //adiciona no gerador que foi removido, todos os geradores deste produtor correspondente
+                                    for (int k = 0; k < prod.getGeradores().size(); k++) {                                        
+                                        produtor.getGeradores().add(prod.getGeradores().get(k));    
+                                    }                                    
+                                }
+                            }                            
+                        }
+                    }        
+                }                
+            }
+        }
+        
+        mostraListaProdutores_Geradores();
+        mostraListaProdutores_NoCampoResultado();
     }
         
     public void verifica_Fatoracao(){
@@ -331,6 +422,31 @@ public class Tela_GLC extends javax.swing.JFrame {
     
     
     //--------------------------MÉTODOS AUXILIARES-------------------------------------------------------------------
+    public ArrayList criaListaNaoTerminais_Solitarios(){
+        //exemplo
+        //S -> aA|aB|B
+        //lista deve conter:    B
+        
+        ArrayList<String> listaCriada = new ArrayList<>();
+        for (Produtor produtor : listaProdutores) {
+            for (int i = 0; i < produtor.getGeradores().size(); i++) {
+                if (produtor.getGeradores().get(i).toString().length()==1){ //se for UM caractere
+                    if(Character.isUpperCase(produtor.getGeradores().get(i).toString().charAt(0))){ //se este caractere for MAIÚSCULO
+                        listaCriada.add(produtor.getGeradores().get(i).toString());
+                    }    
+                }                
+            }
+        }
+        
+        System.out.println("ListaCriada");
+        for (int i = 0; i < listaCriada.size(); i++) {
+            System.out.println("    lista["+i+"]="+listaCriada.get(i).toString());
+        }
+        
+        return listaCriada;
+    }
+    
+    
     public Produtor criaNovoProdutor_UsandoLetra(String letra){
         Produtor produtor = new Produtor();
         
@@ -396,8 +512,6 @@ public class Tela_GLC extends javax.swing.JFrame {
             posicaoSeparador = linha.indexOf("->");
             ladoEsquerdoProducao.add(linha.substring(0, posicaoSeparador).trim());
             ladoDireitoProducao.add(linha.substring(posicaoSeparador+2, linha.length()).trim());
-            
-
         } 
         //System.out.println("ladoEsq="+ladoEsquerdoProducao);
         //System.out.println("ladoDir="+ladoDireitoProducao);                
@@ -418,9 +532,7 @@ public class Tela_GLC extends javax.swing.JFrame {
             }
             
             listaProdutores.add(produtor);
-        }       
-
-        mostraListaProdutores_Geradores();
+        }               
     }
     
     public void mostraListaProdutores_Geradores(){
@@ -433,6 +545,32 @@ public class Tela_GLC extends javax.swing.JFrame {
             }
         }
         System.out.println("------------------------------------------------");                                
+    }
+    
+    public void mostraListaProdutores_NoCampoResultado(){        
+        textAreaResultado.setText("");
+        
+        String linha="";
+        for (Produtor prod : listaProdutores) {
+            linha = prod.getLetras()+"->";
+            for (int i = 0; i < prod.getGeradores().size(); i++) {
+                linha = linha + prod.getGeradores().get(i).toString()+"|";
+            }
+            linha = linha.substring(0, linha.length()-1); //removendo o ultimo "|"
+            linha = linha+"\n";
+            textAreaResultado.append(linha);
+        }        
+    }  
+    
+    public void atualizaProdutorComGeradorNovo(Produtor produtor, Produtor produtorNovo){
+        String letraProcurada = produtor.getLetras();
+        for (Produtor prod : listaProdutores) {
+            if (prod.getLetras().equals(letraProcurada)){
+                prod.getGeradores().clear();
+                prod.getGeradores().add(produtorNovo.getLetras());
+                break;
+            }
+        }        
     }
             
     //--------------------------FIM MÉTODOS AUXILIARES-------------------------------------------------------------------    
@@ -475,7 +613,9 @@ public class Tela_GLC extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExecutar;
+    private javax.swing.JButton btnMoverResultadoParaCampoGramatica;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
